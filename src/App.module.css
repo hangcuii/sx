@@ -162,3 +162,109 @@ footer {
     border: none;
     border-radius: 5px;
 }
+
+/* --- 登录/注册表单容器样式 --- */
+.formContainer {
+    /* 复用卡片样式 */
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(0, 183, 255, 0.2);
+    border-radius: 12px;
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    text-align: center;
+}
+
+.formContainer h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #FFFFFF;
+    font-weight: 500;
+}
+
+/* --- 输入框组样式 --- */
+.inputGroup {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.inputField {
+    width: 100%;
+    padding: 15px 15px 15px 45px; /* 左边留出图标空间 */
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid #4a5568;
+    border-radius: 8px;
+    color: #E0E0E0;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.inputField:focus {
+    outline: none;
+    border-color: #00B7FF;
+    box-shadow: 0 0 10px rgba(0, 183, 255, 0.5);
+}
+
+.inputIcon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #A0B3D1;
+    transition: color 0.3s ease;
+}
+
+.inputField:focus + .inputIcon {
+    color: #00B7FF;
+}
+
+/* --- 提交按钮样式 --- */
+.submitButton {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(90deg, #00B7FF, #29d8a3);
+    border: none;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submitButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 183, 255, 0.3);
+}
+
+.submitButton:disabled {
+    background: #4a5568;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* --- 错误信息和链接样式 --- */
+.errorMessage {
+    color: #ff6b6b;
+    margin-top: -15px;
+    margin-bottom: 20px;
+    min-height: 1.2em; /* 占位，防止布局跳动 */
+}
+
+.switchFormLink {
+    margin-top: 25px;
+    color: #A0B3D1;
+}
+
+.switchFormLink a {
+    color: #00B7FF;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.switchFormLink a:hover {
+    text-decoration: underline;
+}

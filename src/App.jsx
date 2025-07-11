@@ -1,110 +1,64 @@
 // src/App.jsx
 
-import { useState } from 'react';
-// 导入 CSS Modules，styles 是一个包含了所有类名的对象
-import styles from './App.module.css';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import styles from './App.module.css'; // 样式文件保持不变
+import { useAuth } from './context/AuthContext';
+
+// 导入所有需要的页面和组件
+import DashboardPage from './pages/DashboardPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import ChangePasswordPage from './pages/ChangePasswordPage';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
-  const [view, setView] = useState('dashboard');
-  const [reportData, setReportData] = useState(null);
-  const [error, setError] = useState(null);
+  const { isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
 
-  const handleCardClick = async (studentId) => {
-    setView('loading');
-    setError(null);
-
-    try {
-      const response = await fetch(`api/student/${studentId}/learningBehavior`);
-      const data = await response.json();
-      if (data.error || !response.ok) {
-        throw new Error(data.error || '获取数据失败');
-      }
-      setReportData(data);
-      setView('report');
-    } catch (err) {
-      console.error('Fetch Error:', err);
-      setError(err.message);
-      setView('error');
-    }
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
   };
 
-  const handleBackToPortal = () => {
-    setView('dashboard');
-    setReportData(null);
-    setError(null);
-  };
-
-  const renderContent = () => {
-    switch (view) {
-      case 'loading':
-        return <p style={{ textAlign: 'center', fontSize: '1.5rem' }}>正在加载分析报告...</p>;
-
-      case 'report':
-        return (
-          <div className={styles['report-container']}>
-            <h1>学习行为分析报告</h1>
-            <div className={styles['report-card']}>
-              <p className={styles['data-label']}>总学习时长</p>
-              <p className={styles['data-value']}>
-                {reportData.learningHour} <span>小时</span>
-              </p>
-            </div>
-            <button id="back-to-portal-btn" className={styles['back-to-portal-btn']} onClick={handleBackToPortal}>
-              返回门户
-            </button>
+  const renderHeader = () => (
+    <header>
+      <h1>智能化在线教学支持服务平台大数据分析系统</h1>
+      <div className={styles.headerContainer}>
+        <p className={styles.subtitle}>洞察教学数据，赋能智慧教育</p>
+        {isAuthenticated && (
+          <div className={styles.headerActions}>
+            <button onClick={() => navigate('/change-password')} className={styles.navButton}>修改密码</button>
+            <button onClick={handleLogout} className={styles.logoutButton}>登出</button>
           </div>
-        );
-
-      case 'error':
-        return (
-          <div style={{ textAlign: 'center', color: 'red' }}>
-            <h2>加载失败</h2>
-            <p>{error}</p>
-            <button className={styles['back-to-portal-btn']} onClick={handleBackToPortal}>
-              返回门户
-            </button>
-          </div>
-        );
-
-      case 'dashboard':
-      default:
-        return (
-          <div className={styles['dashboard-grid']}>
-            <div
-              id="learning-behavior-card"
-              className={styles.card}
-              data-studentid="101"
-              style={{ cursor: 'pointer' }}
-              onClick={() => handleCardClick(101)}
-            >
-              <i className="fas fa-chart-line"></i>
-              <h2>学习行为分析</h2>
-              <p>点击查看ID为101的学生的学习行为分析。</p>
-            </div>
-            {/* <a> 标签也使用 styles.card */}
-            <a href="#" className={styles.card}>
-              <i className="fas fa-book-open-reader"></i>
-              <h2>教学资源分析</h2>
-              <p>功能待开发...</p>
-            </a>
-          </div>
-        );
-    }
-  };
+        )}
+      </div>
+    </header>
+  );
 
   return (
     <>
-      <header>
-        <h1>智能化在线教学支持服务平台大数据分析系统</h1>
-        <p className={styles.subtitle}>洞察教学数据，赋能智慧教育</p>
-      </header>
+      {renderHeader()}
 
       <main id="content-area">
-        {renderContent()}
+        <Routes>
+          {/* 公共路由 */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+
+          {/* 受保护的路由 */}
+          <Route element={<ProtectedRoute />}>
+            {/* 核心改动在这里：'/' 路径现在渲染我们封装好的 DashboardPage */}
+            <Route path="/" element={<DashboardPage />} />
+            <Route path="/change-password" element={<ChangePasswordPage />} />
+          </Route>
+
+          {/* 404 页面 */}
+          <Route path="*" element={<h2>404: 页面未找到</h2>} />
+        </Routes>
       </main>
 
       <footer>
-        <p> All Rights Reserved.</p>
+        <p>All Rights Reserved.</p>
       </footer>
     </>
   );
