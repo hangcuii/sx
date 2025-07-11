@@ -1,0 +1,164 @@
+
+/* 全局样式重置和基础设置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #121828; /* 深蓝科技背景色 */
+    color: #E0E0E0; /* 默认浅色文字 */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0);
+    background-size: 20px 20px; /* 创建微妙的网格背景 */
+}
+
+/* 头部样式 */
+header {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #00B7FF, #4dffc3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 10px;
+}
+
+header .subtitle {
+    font-size: 1.1rem;
+    color: #A0B3D1;
+    font-weight: 300;
+}
+
+/* 主内容区域 */
+main {
+    flex-grow: 1; /* 让主内容区占据剩余空间，将页脚推到底部 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* 仪表盘网格布局 */
+.dashboard-grid {
+    display: grid;
+    /* 响应式网格：在不同屏幕宽度下自动调整列数 */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* 卡片基础样式 */
+.card {
+    background: rgba(30, 41, 59, 0.5); /* 半透明卡片背景 */
+    border: 1px solid rgba(0, 183, 255, 0.2);
+    border-radius: 12px;
+    padding: 30px;
+    text-align: center;
+    text-decoration: none; /* 去掉链接下划线 */
+    color: #E0E0E0;
+    backdrop-filter: blur(10px); /* 毛玻璃效果 */
+    transition: all 0.3s ease;
+    overflow: hidden; /* 配合动画效果 */
+    position: relative;
+}
+
+/* 卡片悬停效果 */
+.card:hover {
+    transform: translateY(-10px); /* 向上浮动 */
+    box-shadow: 0 15px 30px rgba(0, 183, 255, 0.2); /* 蓝色辉光效果 */
+    border-color: rgba(0, 183, 255, 0.5);
+}
+
+/* 卡片图标样式 */
+.card i {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #00B7FF; /* 亮蓝色图标 */
+    transition: transform 0.3s ease;
+}
+
+.card:hover i {
+    transform: scale(1.1);
+}
+
+/* 卡片标题 */
+.card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #FFFFFF;
+}
+
+/* 卡片描述文字 */
+.card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #A0B3D1;
+}
+
+/* 页脚样式 */
+footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+    color: #6a788e;
+}
+
+/* 响应式设计：针对小屏幕设备 */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+    .dashboard-grid {
+        grid-template-columns: 1fr; /* 在手机上变为单列布局 */
+    }
+}
+
+
+
+
+
+
+
+
+
+
+.report-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+.report-card {
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(0, 183, 255, 0.3);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 20px;
+}
+.report-card p { font-size: 1.2rem; margin: 10px 0; }
+.data-label { color: #A0B3D1; }
+.data-value { font-size: 3rem; color: #00B7FF; font-weight: bold; }
+.data-value span { font-size: 1.5rem; }
+#back-to-portal-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: #00B7FF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
