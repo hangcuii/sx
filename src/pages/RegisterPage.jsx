@@ -130,7 +130,7 @@ const RegisterPage = () => {
 
         <button
           type="submit"
-          className={styles.submitButton}
+          className={`${styles.btn} ${styles.btnPrimary} ${styles.submitButton}`}
           disabled={isLoading || success} // 正在加载或成功后都禁用按钮
         >
           {isLoading ? '注册中...' : '注 册'}

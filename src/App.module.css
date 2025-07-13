@@ -1,270 +1,276 @@
+/* src/App.module.css */
 
-/* 全局样式重置和基础设置 */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ================== */
+/*      通用布局       */
+/* ================== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem; /* 上下留白，左右留白 */
 }
 
-body {
-    font-family: 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: #121828; /* 深蓝科技背景色 */
-    color: #E0E0E0; /* 默认浅色文字 */
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0);
-    background-size: 20px 20px; /* 创建微妙的网格背景 */
+/* ================== */
+/*    Header & Footer   */
+/* ================== */
+.header {
+  background-color: var(--color-surface);
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-/* 头部样式 */
-header {
-    text-align: center;
-    padding: 40px 20px;
+.header h1 {
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  margin-bottom: 0.25rem;
+  text-align: center;
 }
 
-header h1 {
-    font-size: 2.5rem;
-    font-weight: 600;
-    color: #FFFFFF;
-    letter-spacing: 2px;
-    background: linear-gradient(90deg, #00B7FF, #4dffc3);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    margin-bottom: 10px;
+.headerContainer {
+  display: flex;
+  justify-content: center; /* 居中内容 */
+  align-items: center;
+  flex-wrap: wrap; /* 换行以适应小屏幕 */
+  position: relative;
+  text-align: center;
 }
 
-header .subtitle {
-    font-size: 1.1rem;
-    color: #A0B3D1;
-    font-weight: 300;
+.subtitle {
+  color: var(--color-text-light);
+  font-size: 1rem;
+  width: 100%; /* 副标题占满一行 */
 }
 
-/* 主内容区域 */
-main {
-    flex-grow: 1; /* 让主内容区占据剩余空间，将页脚推到底部 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+.headerActions {
+  /* 定位到右上角 */
+  position: absolute;
+  top: 50%;
+  right: 2rem;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 1rem;
 }
 
-/* 仪表盘网格布局 */
-.dashboard-grid {
-    display: grid;
-    /* 响应式网格：在不同屏幕宽度下自动调整列数 */
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    width: 100%;
-    max-width: 1200px;
+.footer {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--color-text-light);
+  font-size: 0.875rem;
+  border-top: 1px solid var(--color-border);
+  margin-top: auto; /* 将 footer 推到底部 */
 }
 
-/* 卡片基础样式 */
-.card {
-    background: rgba(30, 41, 59, 0.5); /* 半透明卡片背景 */
-    border: 1px solid rgba(0, 183, 255, 0.2);
-    border-radius: 12px;
-    padding: 30px;
-    text-align: center;
-    text-decoration: none; /* 去掉链接下划线 */
-    color: #E0E0E0;
-    backdrop-filter: blur(10px); /* 毛玻璃效果 */
-    transition: all 0.3s ease;
-    overflow: hidden; /* 配合动画效果 */
-    position: relative;
+/* ================== */
+/*       按钮样式      */
+/* ================== */
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid transparent;
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease-in-out;
+  text-decoration: none;
+  line-height: 1.5;
 }
 
-/* 卡片悬停效果 */
-.card:hover {
-    transform: translateY(-10px); /* 向上浮动 */
-    box-shadow: 0 15px 30px rgba(0, 183, 255, 0.2); /* 蓝色辉光效果 */
-    border-color: rgba(0, 183, 255, 0.5);
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--box-shadow);
 }
 
-/* 卡片图标样式 */
-.card i {
-    font-size: 3rem;
-    margin-bottom: 20px;
-    color: #00B7FF; /* 亮蓝色图标 */
-    transition: transform 0.3s ease;
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+  transform: none;
+  box-shadow: none;
 }
 
-.card:hover i {
-    transform: scale(1.1);
+.btnPrimary {
+  color: #fff;
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.btnPrimary:hover {
+  background-color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
 }
 
-/* 卡片标题 */
-.card h2 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: #FFFFFF;
+.btnSecondary {
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+}
+.btnSecondary:hover {
+  background-color: var(--color-background);
+  border-color: #adb5bd;
 }
 
-/* 卡片描述文字 */
-.card p {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: #A0B3D1;
+.btnDanger {
+  color: #fff;
+  background-color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+.btnDanger:hover {
+  background-color: var(--color-danger-dark);
+  border-color: var(--color-danger-dark);
 }
 
-/* 页脚样式 */
-footer {
-    text-align: center;
-    padding: 20px;
-    font-size: 0.9rem;
-    color: #6a788e;
-}
-
-/* 响应式设计：针对小屏幕设备 */
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 1.8rem;
-    }
-    .dashboard-grid {
-        grid-template-columns: 1fr; /* 在手机上变为单列布局 */
-    }
-}
-
-
-
-
-
-
-
-
-
-
-.report-container {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-}
-.report-card {
-    background: rgba(30, 41, 59, 0.7);
-    border: 1px solid rgba(0, 183, 255, 0.3);
-    border-radius: 15px;
-    padding: 30px;
-    margin-bottom: 20px;
-}
-.report-card p { font-size: 1.2rem; margin: 10px 0; }
-.data-label { color: #A0B3D1; }
-.data-value { font-size: 3rem; color: #00B7FF; font-weight: bold; }
-.data-value span { font-size: 1.5rem; }
-#back-to-portal-btn {
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    background-color: #00B7FF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-}
-
-/* --- 登录/注册表单容器样式 --- */
+/* ================== */
+/*       表单样式      */
+/* ================== */
 .formContainer {
-    /* 复用卡片样式 */
-    background: rgba(30, 41, 59, 0.5);
-    border: 1px solid rgba(0, 183, 255, 0.2);
-    border-radius: 12px;
-    padding: 40px;
-    width: 100%;
-    max-width: 450px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    text-align: center;
+  max-width: 450px;
+  margin: 2rem auto; /* 上下外边距，左右自动 */
+  padding: 2.5rem;
+  background: var(--color-surface);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  text-align: center;
 }
 
 .formContainer h2 {
-    font-size: 2rem;
-    margin-bottom: 30px;
-    color: #FFFFFF;
-    font-weight: 500;
+  margin-bottom: 2rem;
+  color: var(--color-text);
 }
 
-/* --- 输入框组样式 --- */
 .inputGroup {
-    position: relative;
-    margin-bottom: 25px;
+  position: relative;
+  margin-bottom: 1.5rem;
 }
 
 .inputField {
-    width: 100%;
-    padding: 15px 15px 15px 45px; /* 左边留出图标空间 */
-    background-color: rgba(0, 0, 0, 0.2);
-    border: 1px solid #4a5568;
-    border-radius: 8px;
-    color: #E0E0E0;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
+  width: 100%;
+  padding: 0.8rem 1rem 0.8rem 2.5rem; /* 左侧留出图标空间 */
+  font-size: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
 }
 
 .inputField:focus {
-    outline: none;
-    border-color: #00B7FF;
-    box-shadow: 0 0 10px rgba(0, 183, 255, 0.5);
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
 }
 
 .inputIcon {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #A0B3D1;
-    transition: color 0.3s ease;
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-light);
 }
 
-.inputField:focus + .inputIcon {
-    color: #00B7FF;
-}
-
-/* --- 提交按钮样式 --- */
 .submitButton {
-    width: 100%;
-    padding: 15px;
-    background: linear-gradient(90deg, #00B7FF, #29d8a3);
-    border: none;
-    border-radius: 8px;
-    color: #FFFFFF;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  width: 100%;
+  /* 继承 .btn 和 .btnPrimary 的样式 */
 }
 
-.submitButton:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0, 183, 255, 0.3);
-}
-
-.submitButton:disabled {
-    background: #4a5568;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-}
-
-/* --- 错误信息和链接样式 --- */
 .errorMessage {
-    color: #ff6b6b;
-    margin-top: -15px;
-    margin-bottom: 20px;
-    min-height: 1.2em; /* 占位，防止布局跳动 */
+  color: var(--color-danger);
+  min-height: 1.2rem; /* 占据空间，防止布局跳动 */
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
 }
 
 .switchFormLink {
-    margin-top: 25px;
-    color: #A0B3D1;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--color-text-light);
 }
 
 .switchFormLink a {
-    color: #00B7FF;
-    text-decoration: none;
-    font-weight: 600;
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+.switchFormLink a:hover {
+  text-decoration: underline;
 }
 
-.switchFormLink a:hover {
-    text-decoration: underline;
+/* ================== */
+/*       卡片样式      */
+/* ================== */
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.card {
+  background: var(--color-surface);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card i {
+  font-size: 3rem;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+.card h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* ================== */
+/*     报告页样式      */
+/* ================== */
+.reportContainer {
+  /* 借用表单容器的样式 */
+  composes: formContainer;
+}
+
+.reportContainer h1 {
+  font-size: 1.5rem;
+}
+
+.reportCard {
+  background: var(--color-background);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  margin: 2rem 0;
+}
+
+.dataLabel {
+  font-size: 1rem;
+  color: var(--color-text-light);
+}
+
+.dataValue {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+.dataValue span {
+  font-size: 1rem;
+  font-weight: normal;
+  color: var(--color-text-light);
+  margin-left: 0.5rem;
 }

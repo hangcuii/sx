@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { changeUsername as changeUsernameApi } from '../services/api'; // 导入修改用户名的 API
+import { changeUsername as changeUsernameApi } from '../services/api'; // 确保 API 已在 api.js 中定义和导出
 import { useAuth } from '../context/AuthContext';
+import styles from '../App.module.css';
 
 const ChangeUsernamePage = () => {
   const [newName, setNewName] = useState('');
@@ -15,10 +16,10 @@ const ChangeUsernamePage = () => {
   const { userId } = useAuth();
 
   const errorMessages = {
-  'Duplicate username': '该用户名已被使用，请换一个试试。',
-  'User not found': '用户不存在，请确认账号信息。',
-  'Missing parameters': '提交的信息不完整，请检查。',
-    };
+    'Duplicate username': '该用户名已被使用，请换一个试试。',
+    'User not found': '用户不存在，请确认账号信息。',
+    'Missing parameters': '提交的信息不完整，请检查。',
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,64 +28,71 @@ const ChangeUsernamePage = () => {
 
     // 基础校验
     if (!newName.trim()) {
-      setError('新用户名不能为空');
+      setError('新用户名不能为空。');
       return;
     }
     if (newName.trim().length < 2) {
-      setError('新用户名长度不能少于2位');
+      setError('新用户名长度不能少于2位。');
       return;
     }
 
     setIsLoading(true);
 
-        try {
+    try {
+      const response = await changeUsernameApi({
+        userId: userId,
+        new_name: newName.trim(),
+      });
 
-              const response = await changeUsernameApi({
-                userid: userId,
-                new_name: newName.trim(),
-              });
-
-
-              if (response.data && response.data.success === 1) {
-                setSuccess(response.data.message || '用户名修改成功！2秒后将返回仪表盘。');
-                setTimeout(() => {
-                  navigate('/dashboard');
-                }, 2000);
-              } else {
-                    const backendError = response.data.error;
-                    const displayError = errorMessages[backendError] || backendError || '操作失败，未知错误。';
-                    setError(displayError);
-              }
-
-            } catch (err) {
-                      const backendError = err.response?.data?.error;
-                      const displayError = errorMessages[backendError] || backendError || '用户名修改失败，请重试。';
-                      setError(displayError);
-            } finally {
-              setIsLoading(false);
-            }
-          };
+      if (response.data && response.data.success === 1) {
+        setSuccess(response.data.message || '用户名修改成功！2秒后将返回仪表盘。');
+        setTimeout(() => {
+          navigate('/dashboard');
+        }, 2000);
+      } else {
+        const backendError = response.data.error;
+        const displayError = errorMessages[backendError] || backendError || '操作失败，未知错误。';
+        setError(displayError);
+      }
+    } catch (err) {
+      const backendError = err.response?.data?.error;
+      const displayError = errorMessages[backendError] || backendError || '用户名修改失败，请重试。';
+      setError(displayError);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <div style={{ maxWidth: '400px', margin: 'auto' }}>
+
+    <div className={styles.formContainer}>
       <h2>修改用户名</h2>
       <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: '1rem' }}>
-          <label>新用户名:</label>
+        <div className={styles.inputGroup}>
+          <i className={`fas fa-user-edit ${styles.inputIcon}`}></i>
           <input
+            id="newUsername"
             type="text"
+            className={styles.inputField}
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
-            required
             placeholder="请输入新的用户名"
-            style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
+            required
           />
         </div>
 
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        {success && <p style={{ color: 'green' }}>{success}</p>}
 
-        <button type="submit" disabled={isLoading} style={{ width: '100%', padding: '10px', cursor: 'pointer' }}>
+        {error && <p className={styles.errorMessage}>{error}</p>}
+        {success && <p style={{ color: 'green', minHeight: '1.2rem', marginBottom: '1rem', fontSize: '0.9rem' }}>{success}</p>}
+        {/* 如果没有错误或成功消息，则显示一个占位的空p标签，防止布局跳动 */}
+        {!error && !success && <p className={styles.errorMessage}></p>}
+
+        {/* 提交按钮 */}
+        <button
+          type="submit"
+          disabled={isLoading || success} // 成功后也禁用按钮
+          className={`${styles.btn} ${styles.btnPrimary} ${styles.submitButton}`}
+        >
           {isLoading ? '正在提交...' : '确认修改'}
         </button>
       </form>

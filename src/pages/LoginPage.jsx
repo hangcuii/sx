@@ -14,12 +14,11 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const auth = useAuth();
 
-
   const errorMessages = {
-  'Password incorrect': '密码错误。',
-  'Username does not exist': '用户不存在，请确认账号信息。',
-  'Missing parameters': '提交的信息不完整，请检查。',
-    };
+    'Password incorrect': '密码错误。',
+    'Username does not exist': '用户不存在，请确认账号信息。',
+    'Missing parameters': '提交的信息不完整，请检查。',
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,22 +26,22 @@ const LoginPage = () => {
     setIsLoading(true);
 
     try {
-
       const response = await loginApi({ name, pwd });
       const responseData = response.data;
 
-      if (responseData.success === 1 && responseData.userid) {
+      if (responseData.success === 1 && responseData.userId) {
         // 登录成功
-        auth.login({ userid: responseData.userid });
-        navigate(`/dashboard?userid=${responseData.userid}`);;
+        auth.login({ userId: responseData.userId });
+        navigate('/dashboard');
       } else {
-            const backendError = response.data.error;
-            const displayError = errorMessages[backendError] || backendError || '操作失败，未知错误。';
-            setError(displayError);
+        // 登录失败（但请求是成功的 200 OK），应用翻译
+        const backendError = responseData.error;
+        const displayError = errorMessages[backendError] || backendError || '登录失败，未知错误。';
+        setError(displayError);
       }
     } catch (err) {
       const backendError = err.response?.data?.error;
-      const displayError = errorMessages[backendError] || backendError || '用户名修改失败，请重试。';
+      const displayError = errorMessages[backendError] || backendError || '登录失败，请重试。';
       setError(displayError);
     } finally {
       setIsLoading(false);
@@ -54,31 +53,35 @@ const LoginPage = () => {
       <h2>系统登录</h2>
       <form onSubmit={handleSubmit}>
         <div className={styles.inputGroup}>
+          <i className={`fas fa-user ${styles.inputIcon}`}></i>
           <input
             id="username"
             type="text"
             className={styles.inputField}
-            value={name} // 绑定到 name
-            onChange={(e) => setName(e.target.value)} // 更新 name
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             placeholder="请输入用户名"
             required
           />
-          <i className={`fas fa-user ${styles.inputIcon}`}></i>
         </div>
         <div className={styles.inputGroup}>
+          <i className={`fas fa-lock ${styles.inputIcon}`}></i>
           <input
             id="password"
             type="password"
             className={styles.inputField}
-            value={pwd} // 绑定到 pwd
-            onChange={(e) => setPwd(e.target.value)} // 更新 pwd
+            value={pwd}
+            onChange={(e) => setPwd(e.target.value)}
             placeholder="请输入密码"
             required
           />
-          <i className={`fas fa-lock ${styles.inputIcon}`}></i>
         </div>
-        <p className={styles.errorMessage}>{error || ' '}</p>
-        <button type="submit" className={styles.submitButton} disabled={isLoading}>
+        <p className={styles.errorMessage}>{error || ''}</p>
+        <button
+          type="submit"
+          className={`${styles.btn} ${styles.btnPrimary} ${styles.submitButton}`}
+          disabled={isLoading}
+        >
           {isLoading ? '登录中...' : '登 录'}
         </button>
       </form>

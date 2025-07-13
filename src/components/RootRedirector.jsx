@@ -8,7 +8,7 @@ const RootRedirector = () => {
 
 
   if (isAuthenticated && userId) {
-    return <Navigate to={`/dashboard?userid=${userId}`} replace />;
+    return <Navigate to={`/dashboard`} replace />;
   }
 
   return <LoginPage />;

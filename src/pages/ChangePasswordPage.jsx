@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { changePassword as changePasswordApi } from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import styles from '../App.module.css'; // 导入我们统一的样式文件
 
 const ChangePasswordPage = () => {
   const [oldPassword, setOldPassword] = useState('');
@@ -14,15 +15,13 @@ const ChangePasswordPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
-  const { userId,logout } = useAuth();
-
+  const { userId, logout } = useAuth();
 
   const errorMessages = {
-  'Invalid old password': '旧密码错误。',
-  'User not found': '用户不存在。',
-  'Missing parameters': '提交的信息不完整，请检查。',
-
-    };
+    'Invalid old password': '旧密码错误。',
+    'User not found': '用户不存在。',
+    'Missing parameters': '提交的信息不完整，请检查。',
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,15 +30,15 @@ const ChangePasswordPage = () => {
 
     // 基础校验
     if (!oldPassword.trim() || !newPassword.trim() || !confirmPassword.trim()) {
-      setError('所有字段均为必填项');
+      setError('所有字段均为必填项。');
       return;
     }
     if (newPassword.trim() !== confirmPassword.trim()) {
-      setError('新密码和确认密码不匹配');
+      setError('新密码和确认密码不匹配。');
       return;
     }
     if (newPassword.trim().length < 6) {
-      setError('新密码长度不能少于6位');
+      setError('新密码长度不能少于6位。');
       return;
     }
 
@@ -47,11 +46,11 @@ const ChangePasswordPage = () => {
 
     try {
       await changePasswordApi({
-        userid: userId,
+        userId: userId,
         old_pwd: oldPassword,
         new_pwd: newPassword,
       });
-      setSuccess('密码修改成功！您需要重新登录。');
+      setSuccess('密码修改成功！2秒后将自动登出并跳转至登录页。');
 
       setTimeout(() => {
         logout();
@@ -59,53 +58,73 @@ const ChangePasswordPage = () => {
       }, 2000);
 
     } catch (err) {
-        const backendError = err.response?.data?.error;
-        const displayError = errorMessages[backendError] || backendError || '用户名修改失败，请重试。';
-        setError(displayError);
+      const backendError = err.response?.data?.error;
+      const displayError = errorMessages[backendError] || backendError || '密码修改失败，请重试。';
+      setError(displayError);
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: 'auto' }}>
+    // 使用统一的 formContainer 样式
+    <div className={styles.formContainer}>
       <h2>修改密码</h2>
       <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: '1rem' }}>
-          <label>旧密码:</label>
+        {/* 旧密码输入框 */}
+        <div className={styles.inputGroup}>
+          <i className={`fas fa-key ${styles.inputIcon}`}></i>
           <input
+            id="oldPassword"
             type="password"
+            className={styles.inputField}
             value={oldPassword}
             onChange={(e) => setOldPassword(e.target.value)}
+            placeholder="请输入旧密码"
             required
-            style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
           />
         </div>
-        <div style={{ marginBottom: '1rem' }}>
-          <label>新密码:</label>
+
+        {/* 新密码输入框 */}
+        <div className={styles.inputGroup}>
+          <i className={`fas fa-lock ${styles.inputIcon}`}></i>
           <input
+            id="newPassword"
             type="password"
+            className={styles.inputField}
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
+            placeholder="请输入新密码（至少6位）"
             required
-            style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
           />
         </div>
-        <div style={{ marginBottom: '1rem' }}>
-          <label>确认新密码:</label>
+
+        {/* 确认新密码输入框 */}
+        <div className={styles.inputGroup}>
+          <i className={`fas fa-check-circle ${styles.inputIcon}`}></i>
           <input
+            id="confirmPassword"
             type="password"
+            className={styles.inputField}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="请再次输入新密码"
             required
-            style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
           />
         </div>
 
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        {success && <p style={{ color: 'green' }}>{success}</p>}
+        {/* 错误和成功消息提示 */}
+        {error && <p className={styles.errorMessage}>{error}</p>}
+        {success && <p style={{ color: 'green', minHeight: '1.2rem', marginBottom: '1rem', fontSize: '0.9rem' }}>{success}</p>}
+        {/* 如果没有错误或成功消息，则显示一个占位的空p标签，防止布局跳动 */}
+        {!error && !success && <p className={styles.errorMessage}></p>}
 
-        <button type="submit" disabled={isLoading} style={{ width: '100%', padding: '10px', cursor: 'pointer' }}>
+        {/* 提交按钮 */}
+        <button
+          type="submit"
+          disabled={isLoading || success} // 成功后也禁用按钮
+          className={`${styles.btn} ${styles.btnPrimary} ${styles.submitButton}`}
+        >
           {isLoading ? '正在提交...' : '确认修改'}
         </button>
       </form>

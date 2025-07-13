@@ -24,8 +24,8 @@ export const AuthProvider = ({ children }) => {
   }, [userId]);
 
   const login = (userData) => {
-    if (userData && userData.userid) {
-      const numericId = parseInt(userData.userid, 10);
+    if (userData && userData.userId) {
+      const numericId = parseInt(userData.userId, 10);
       if (!isNaN(numericId)) {
         setUserId(numericId);
       }
