@@ -9,6 +9,7 @@ import DashboardPage from './pages/DashboardPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ChangePasswordPage from './pages/ChangePasswordPage';
+import ChangeUsernamePage from './pages/ChangeUsernamePage';
 import ProtectedRoute from './components/ProtectedRoute';
 import RootRedirector from './components/RootRedirector';
 
@@ -27,20 +28,21 @@ function App() {
       <div className={styles.headerContainer}>
         <p className={styles.subtitle}>洞察教学数据，赋能智慧教育</p>
         {isAuthenticated && (
-          <div className={styles.headerActions}>
-            <button onClick={() => navigate('/change-password')} className={styles.navButton}>修改密码</button>
-            <button onClick={handleLogout} className={styles.logoutButton}>登出</button>
-          </div>
+            <div className={styles.headerActions}>
+                <button onClick={() => navigate('/change-username')} className={styles.navButton}>修改用户名</button>
+                <button onClick={() => navigate('/change-password')} className={styles.navButton}>修改密码</button>
+                <button onClick={handleLogout} className={styles.logoutButton}>登出</button>
+            </div>
         )}
       </div>
     </header>
   );
 
-  return (
-    <>
-      {renderHeader()}
+    return (
+        <>
+            {renderHeader()}
 
-      <main id="content-area">
+            <main id="content-area">
         <Routes>
           {/* 公共路由 */}
           <Route path="/login" element={<LoginPage />} />
@@ -49,6 +51,7 @@ function App() {
 
           {/* 受保护的路由 */}
           <Route element={<ProtectedRoute />}>
+            <Route path="/change-username" element={<ChangeUsernamePage />} />
             <Route path="/change-password" element={<ChangePasswordPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
           </Route>

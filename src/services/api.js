@@ -29,7 +29,8 @@ apiClient.interceptors.request.use(
 
 export const login = (credentials) => apiClient.post('/api/auth/login', credentials);
 export const register = (userData) => apiClient.post('/api/auth/register', userData);
-export const changePassword = (passwords) => apiClient.post('/change-password', passwords);
+export const changePassword = (update4pwd) => apiClient.post('/api/user/update_pwd', update4pwd);
+export const changeUsername = (update4name) => apiClient.post('/api/user/update_name', update4name);
 
 
 

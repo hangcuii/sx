@@ -14,7 +14,15 @@ const ChangePasswordPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { userId,logout } = useAuth();
+
+
+  const errorMessages = {
+  'Invalid old password': '旧密码错误。',
+  'User not found': '用户不存在。',
+  'Missing parameters': '提交的信息不完整，请检查。',
+
+    };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,15 +30,15 @@ const ChangePasswordPage = () => {
     setSuccess('');
 
     // 基础校验
-    if (!oldPassword || !newPassword || !confirmPassword) {
+    if (!oldPassword.trim() || !newPassword.trim() || !confirmPassword.trim()) {
       setError('所有字段均为必填项');
       return;
     }
-    if (newPassword !== confirmPassword) {
+    if (newPassword.trim() !== confirmPassword.trim()) {
       setError('新密码和确认密码不匹配');
       return;
     }
-    if (newPassword.length < 6) {
+    if (newPassword.trim().length < 6) {
       setError('新密码长度不能少于6位');
       return;
     }
@@ -39,19 +47,21 @@ const ChangePasswordPage = () => {
 
     try {
       await changePasswordApi({
-        old_password: oldPassword, // 与后端 Flask 定义的字段名匹配
-        new_password: newPassword,
+        userid: userId,
+        old_pwd: oldPassword,
+        new_pwd: newPassword,
       });
       setSuccess('密码修改成功！您需要重新登录。');
 
-      // 密码修改成功后，执行登出操作并跳转到登录页
       setTimeout(() => {
         logout();
         navigate('/login');
-      }, 2000); // 延迟2秒，让用户看到成功信息
+      }, 2000);
 
     } catch (err) {
-      setError(err.response?.data?.message || '密码修改失败，请重试');
+        const backendError = err.response?.data?.error;
+        const displayError = errorMessages[backendError] || backendError || '用户名修改失败，请重试。';
+        setError(displayError);
     } finally {
       setIsLoading(false);
     }

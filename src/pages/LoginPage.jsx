@@ -14,6 +14,13 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const auth = useAuth();
 
+
+  const errorMessages = {
+  'Password incorrect': '密码错误。',
+  'Username does not exist': '用户不存在，请确认账号信息。',
+  'Missing parameters': '提交的信息不完整，请检查。',
+    };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -24,16 +31,19 @@ const LoginPage = () => {
       const response = await loginApi({ name, pwd });
       const responseData = response.data;
 
-      if (responseData.pass === 1 && responseData.userid) {
+      if (responseData.success === 1 && responseData.userid) {
         // 登录成功
         auth.login({ userid: responseData.userid });
         navigate(`/dashboard?userid=${responseData.userid}`);;
       } else {
-        // 登录失败（但请求是成功的 200 OK）
-        setError(responseData.error || '登录失败，未知错误');
+            const backendError = response.data.error;
+            const displayError = errorMessages[backendError] || backendError || '操作失败，未知错误。';
+            setError(displayError);
       }
     } catch (err) {
-      setError(err.response?.data?.error || '发生网络错误，请稍后重试');
+      const backendError = err.response?.data?.error;
+      const displayError = errorMessages[backendError] || backendError || '用户名修改失败，请重试。';
+      setError(displayError);
     } finally {
       setIsLoading(false);
     }

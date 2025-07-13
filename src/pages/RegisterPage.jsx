@@ -16,6 +16,11 @@ const RegisterPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  const errorMessages = {
+    'Duplicate username': '该用户名已被使用，请换一个试试。',
+    'Missing parameters': '提交的信息不完整，请检查。',
+    };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -23,30 +28,28 @@ const RegisterPage = () => {
     setIsLoading(true);
 
     // 前端校验
-    if (pwd !== confirmPassword) {
+    if (pwd.trim() !== confirmPassword.trim()) {
       setError('两次输入的密码不一致');
       setIsLoading(false);
       return;
     }
-    if (name.length < 1 ||name.length>16) {
+    if (name.trim().length < 1 ||name.trim().length>16) {
       setError('用户名长度必须为1到16位');
       setIsLoading(false);
       return;
     }
 
-    if (pwd.length < 1 ||pwd.length>16) {
+    if (pwd.trim().length < 1 ||pwd.trim().length>16) {
       setError('密码长度必须为1到16位');
       setIsLoading(false);
       return;
     }
 
     try {
-          // 发送 { name, pwd } 来匹配后端
           const response = await registerApi({ name, pwd });
           const responseData = response.data;
 
           // 在 try 块中处理业务逻辑失败
-          // 检查后端返回的 success 字段
           if (responseData.success === 1) {
 
             setSuccess('注册成功！2秒后将自动跳转到登录页面...');
@@ -56,13 +59,17 @@ const RegisterPage = () => {
           } else {
             // 业务逻辑失败 (例如，用户名重复)
             // axios 认为是成功 (200 OK)，在这里处理错误
-            setError(responseData.error || '注册失败，未知错误');
+            const backendError = response.data.error;
+            const displayError = errorMessages[backendError] || backendError || '操作失败，未知错误。';
+            setError(displayError);
             setIsLoading(false);
           }
 
         } catch (err) {
           // catch 块处理网络错误和 4xx/5xx 状态码
-          setError(err.response?.data?.error || '注册失败，请检查网络或联系管理员');
+          const backendError = err.response?.data?.error;
+          const displayError = errorMessages[backendError] || backendError || '用户名修改失败，请重试。';
+          setError(displayError);
           setIsLoading(false);
         }
       };
