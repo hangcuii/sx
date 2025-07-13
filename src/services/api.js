@@ -40,8 +40,7 @@ export const getStudentLearningBehavior = (studentId) => {
 };
 
 
-// 示例：获取受保护的仪表盘数据（如果需要的话）
+// 获取受保护的仪表盘数据（如果需要的话）
 export const getDashboardData = () => apiClient.get('/dashboard-data');
 
-// 默认导出 apiClient 实例，方便在其他地方直接使用
 export default apiClient;

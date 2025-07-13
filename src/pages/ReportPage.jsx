@@ -1,14 +1,14 @@
 // src/pages/ReportPage.jsx
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'; // 使用 useParams 获取 URL 参数
+import { useParams } from 'react-router-dom';
 import Loading from '../components/Loading';
 import Error from '../components/Error';
-import { getStudentLearningBehavior } from '../services/api'; // 封装好的 API 调用
+import { getStudentLearningBehavior } from '../services/api';
 
 const ReportPage = () => {
-  const { studentId } = useParams(); // 从 URL 中获取 studentId
+  const { studentId } = useParams();
   const [reportData, setReportData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true); // 初始为 true
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const ReportPage = () => {
       setIsLoading(true);
       setError(null);
       try {
-        const data = await getStudentLearningBehavior(studentId); // 使用封装的 API
+        const data = await getStudentLearningBehavior(studentId);
         setReportData(data);
       } catch (err) {
         setError(err.response?.data?.message || '获取报告数据失败');
@@ -30,7 +30,7 @@ const ReportPage = () => {
 
   const handleRetry = () => {
     // 重新获取数据
-    window.location.reload(); // 简单粗暴的方式
+    window.location.reload();
   };
 
   if (isLoading) return <Loading />;

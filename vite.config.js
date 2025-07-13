@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://192.168.81.81:3000', // 你的后端服务地址
+        target: 'http://192.168.81.142:3000', // 你的后端服务地址
         changeOrigin: true,             // 需要虚拟主机站点
       },
     },

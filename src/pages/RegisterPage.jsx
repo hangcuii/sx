@@ -8,8 +8,8 @@ import { register as registerApi } from '../services/api';
 import styles from '../App.module.css';
 
 const RegisterPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [pwd, setPwd] = useState('');
   const [confirmPassword, setConfirmPassword] = useState(''); // 添加确认密码字段
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -23,31 +23,49 @@ const RegisterPage = () => {
     setIsLoading(true);
 
     // 前端校验
-    if (password !== confirmPassword) {
+    if (pwd !== confirmPassword) {
       setError('两次输入的密码不一致');
       setIsLoading(false);
       return;
     }
-    if (password.length < 6) {
-      setError('密码长度不能少于6位');
+    if (name.length < 1 ||name.length>16) {
+      setError('用户名长度必须为1到16位');
+      setIsLoading(false);
+      return;
+    }
+
+    if (pwd.length < 1 ||pwd.length>16) {
+      setError('密码长度必须为1到16位');
       setIsLoading(false);
       return;
     }
 
     try {
-      await registerApi({ username, password });
-      setSuccess('注册成功！2秒后将自动跳转到登录页面...');
+          // 发送 { name, pwd } 来匹配后端
+          const response = await registerApi({ name, pwd });
+          const responseData = response.data;
 
-      // 禁用表单，并准备跳转
-      setTimeout(() => {
-        navigate('/login');
-      }, 2000);
+          // 在 try 块中处理业务逻辑失败
+          // 检查后端返回的 success 字段
+          if (responseData.success === 1) {
 
-    } catch (err) {
-      setError(err.response?.data?.message || '注册失败，用户名可能已被占用');
-      setIsLoading(false);
-    }
-  };
+            setSuccess('注册成功！2秒后将自动跳转到登录页面...');
+            setTimeout(() => {
+              navigate('/login');
+            }, 2000);
+          } else {
+            // 业务逻辑失败 (例如，用户名重复)
+            // axios 认为是成功 (200 OK)，在这里处理错误
+            setError(responseData.error || '注册失败，未知错误');
+            setIsLoading(false);
+          }
+
+        } catch (err) {
+          // catch 块处理网络错误和 4xx/5xx 状态码
+          setError(err.response?.data?.error || '注册失败，请检查网络或联系管理员');
+          setIsLoading(false);
+        }
+      };
 
   return (
     <div className={styles.formContainer}>
@@ -59,9 +77,9 @@ const RegisterPage = () => {
             id="username"
             type="text"
             className={styles.inputField}
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="请输入用户名"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="请输入用户名（1到16位）"
             required
             disabled={isLoading || success} // 成功后禁用输入
           />
@@ -73,9 +91,9 @@ const RegisterPage = () => {
             id="password"
             type="password"
             className={styles.inputField}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="请输入密码（至少6位）"
+            value={pwd}
+            onChange={(e) => setPwd(e.target.value)}
+            placeholder="请输入密码（1到16位）"
             required
             disabled={isLoading || success}
           />

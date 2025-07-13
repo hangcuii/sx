@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { changePassword as changePasswordApi } from '../services/api';
-import { useAuth } from '../context/AuthContext'; // 引入 useAuth 来登出用户
+import { useAuth } from '../context/AuthContext';
 
 const ChangePasswordPage = () => {
   const [oldPassword, setOldPassword] = useState('');
@@ -14,7 +14,7 @@ const ChangePasswordPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
-  const { logout } = useAuth(); // 获取登出函数
+  const { logout } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();

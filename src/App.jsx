@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ChangePasswordPage from './pages/ChangePasswordPage';
 import ProtectedRoute from './components/ProtectedRoute';
+import RootRedirector from './components/RootRedirector';
 
 function App() {
   const { isAuthenticated, logout } = useAuth();
@@ -44,12 +45,12 @@ function App() {
           {/* 公共路由 */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/" element={<RootRedirector />} />
 
           {/* 受保护的路由 */}
           <Route element={<ProtectedRoute />}>
-            {/* 核心改动在这里：'/' 路径现在渲染我们封装好的 DashboardPage */}
-            <Route path="/" element={<DashboardPage />} />
             <Route path="/change-password" element={<ChangePasswordPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
           </Route>
 
           {/* 404 页面 */}

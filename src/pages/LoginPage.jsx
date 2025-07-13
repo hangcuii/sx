@@ -7,7 +7,6 @@ import { login as loginApi } from '../services/api';
 import styles from '../App.module.css';
 
 const LoginPage = () => {
-  // name 和 pwd 状态，匹配 API
   const [name, setName] = useState('');
   const [pwd, setPwd] = useState('');
   const [error, setError] = useState('');
@@ -21,23 +20,19 @@ const LoginPage = () => {
     setIsLoading(true);
 
     try {
-      // API 返回的 response
+
       const response = await loginApi({ name, pwd });
+      const responseData = response.data;
 
-      // --- 关键：处理新的响应逻辑 ---
-      const responseData = response.data; // responseData 是 { pass: 1, userid: ... } 或 { pass: 0, error: ... }
-
-      if (responseData.pass === 1) {
+      if (responseData.pass === 1 && responseData.userid) {
         // 登录成功
-        auth.login({ userid: responseData.userid }); // 将 userid 存入 context
-        navigate('/'); // 跳转到主页
+        auth.login({ userid: responseData.userid });
+        navigate(`/dashboard?userid=${responseData.userid}`);;
       } else {
         // 登录失败（但请求是成功的 200 OK）
         setError(responseData.error || '登录失败，未知错误');
       }
     } catch (err) {
-      // 捕获真正的网络错误或 400/500 错误
-      // 按照规范，这主要处理 "Missing parameters" (400) 和 "Internal server error" (500)
       setError(err.response?.data?.error || '发生网络错误，请稍后重试');
     } finally {
       setIsLoading(false);
