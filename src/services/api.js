@@ -33,6 +33,7 @@ export const changePassword = (update4pwd) => apiClient.post('/api/user/update_p
 export const changeUsername = (update4name) => apiClient.post('/api/user/update_name', update4name);
 export const bindStudent = (studentData) => apiClient.post('/api/user/update_studentId', studentData);
 export const bindTeacher = (teacherData) => apiClient.post('/api/user/update_teacherId', teacherData);
+export const deleteUser = (userData) => apiClient.post('/api/user/userDeletion', userData);
 
 
 

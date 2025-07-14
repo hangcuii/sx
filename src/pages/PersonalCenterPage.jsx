@@ -66,6 +66,14 @@ const PersonalCenterPage = () => {
           <h3 style={{ color: 'var(--color-danger)' }}>安全登出</h3>
           <p>退出当前账户。</p>
         </div>
+
+        <Link to="/delete-account" className={styles.card}>
+          <i className="fas fa-trash-alt" style={{ color: 'var(--color-danger)' }}></i>
+          <h3 style={{ color: 'var(--color-danger)' }}>注销账户</h3>
+          <p>此操作将永久删除您的账户信息。</p>
+        </Link>
+
+
       </div>
     </div>
   );

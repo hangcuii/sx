@@ -23,6 +23,7 @@ import StudentBehaviorAnalysisPage from "./pages/StudentBehaviorAnalysisPage.jsx
 import StudentPortraitPage from "./pages/StudentPortraitPage.jsx";
 import TeacherCenterPage from "./pages/TeacherCenterPage.jsx";
 import TeacherPortraitPage from "./pages/TeacherPortraitPage.jsx";
+import UserDeletionPage from './pages/UserDeletionPage';
 
 
 
@@ -107,6 +108,7 @@ function App() {
                         <Route path="/student-portrait" element={<StudentPortraitPage />} />
                         <Route path="/teacher-center" element={<TeacherCenterPage />} />
                         <Route path="/teacher-portrait" element={<TeacherPortraitPage />} />
+                        <Route path="/delete-account" element={<UserDeletionPage />} />
 
 
 
