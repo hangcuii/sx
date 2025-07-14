@@ -26,7 +26,6 @@ export const AuthProvider = ({ children }) => {
 
   // login 函数现在接收后端返回的原始数据对象
   const login = (backendUserData) => {
-    // --- 这里是核心修改 ---
     // 从后端数据构建内部的 user 对象，并确保所有 ID 都是整数
 
     const newUserId = parseInt(backendUserData.userId || backendUserData.userid, 10);
