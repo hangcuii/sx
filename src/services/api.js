@@ -37,6 +37,7 @@ export const bindTeacher = (teacherData) => apiClient.post('/api/user/update_tea
 
 
 
+
 export const getStudentLearningBehavior = (studentId) => {
 
   return apiClient.get(`/api/student/${studentId}/learningBehavior`);

@@ -67,8 +67,26 @@ export const AuthProvider = ({ children }) => {
     });
   }, []);
 
+
+  const clearUserStudentId = useCallback(() => {
+    setUser(currentUser => {
+      if (!currentUser) return null;
+      const updatedUser = { ...currentUser, studentId: null };
+      return updatedUser;
+    });
+  }, []);
+
+
+  const clearUserTeacherId = useCallback(() => {
+    setUser(currentUser => {
+      if (!currentUser) return null;
+      const updatedUser = { ...currentUser, teacherId: null };
+      return updatedUser;
+    });
+  }, []);
+
   const isAuthenticated = !!user;
-  const value = { user, isAuthenticated, login, logout, updateUserStudentId ,updateUserTeacherId};
+  const value = { user, isAuthenticated, login, logout, updateUserStudentId ,updateUserTeacherId, clearUserStudentId ,clearUserTeacherId };
 
   return (
     <AuthContext.Provider value={value}>

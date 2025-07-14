@@ -274,3 +274,22 @@
   color: var(--color-text-light);
   margin-left: 0.5rem;
 }
+
+.buttonGroup {
+  display: flex; /* 使用 Flexbox 布局，让内部元素（按钮）水平排列 */
+  justify-content: center; /* 让按钮组在容器内居中 */
+  gap: 1rem; /* 在按钮之间创建 1rem (约16px) 的间距 */
+  width: 100%; /* 让按钮组容器的宽度与其他元素（如提交按钮）保持一致 */
+}
+
+/* (可选) 为危险操作按钮添加红色样式 */
+.btnDanger {
+  background-color: #dc3545; /* 危险操作的红色背景 */
+  border-color: #dc3545;
+  color: white;
+}
+
+.btnDanger:hover {
+  background-color: #c82333; /* 鼠标悬停时颜色变深 */
+  border-color: #bd2130;
+}
