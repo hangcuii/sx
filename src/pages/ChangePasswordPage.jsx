@@ -15,7 +15,7 @@ const ChangePasswordPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
-  const { userId, logout } = useAuth();
+  const { user, logout } = useAuth();
 
   const errorMessages = {
     'Invalid old password': '旧密码错误。',
@@ -46,7 +46,7 @@ const ChangePasswordPage = () => {
 
     try {
       await changePasswordApi({
-        userId: userId,
+        userId: user.userId,
         old_pwd: oldPassword,
         new_pwd: newPassword,
       });

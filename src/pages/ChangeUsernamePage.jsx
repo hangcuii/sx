@@ -13,7 +13,7 @@ const ChangeUsernamePage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
-  const { userId } = useAuth();
+  const { user } = useAuth();
 
   const errorMessages = {
     'Duplicate username': '该用户名已被使用，请换一个试试。',
@@ -40,12 +40,12 @@ const ChangeUsernamePage = () => {
 
     try {
       const response = await changeUsernameApi({
-        userId: userId,
+        userId: user.userId,
         new_name: newName.trim(),
       });
 
       if (response.data && response.data.success === 1) {
-        setSuccess(response.data.message || '用户名修改成功！2秒后将返回仪表盘。');
+        setSuccess('用户名修改成功！2秒后将返回仪表盘。');
         setTimeout(() => {
           navigate('/dashboard');
         }, 2000);
