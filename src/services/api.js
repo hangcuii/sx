@@ -31,6 +31,8 @@ export const login = (credentials) => apiClient.post('/api/auth/login', credenti
 export const register = (userData) => apiClient.post('/api/auth/register', userData);
 export const changePassword = (update4pwd) => apiClient.post('/api/user/update_pwd', update4pwd);
 export const changeUsername = (update4name) => apiClient.post('/api/user/update_name', update4name);
+export const bindStudent = (studentData) => apiClient.post('/api/user/update_studentId', studentData);
+export const bindTeacher = (teacherData) => apiClient.post('/api/user/update_teacherId', teacherData);
 
 
 

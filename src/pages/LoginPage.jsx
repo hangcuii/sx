@@ -25,16 +25,20 @@ const LoginPage = () => {
     setError('');
     setIsLoading(true);
 
-    try {
+        try {
       const response = await loginApi({ name, pwd });
       const responseData = response.data;
 
+      // 假设后端成功时返回: { success: 1, userId: ..., studentId: ..., teacherId: ... }
       if (responseData.success === 1 && responseData.userId) {
-        // 登录成功
-        auth.login({ userId: responseData.userId });
+
+        // --- 简化后的逻辑 ---
+        // 直接将后端返回的整个数据对象传递给 login 函数
+        auth.login(responseData);
+
         navigate('/dashboard');
+
       } else {
-        // 登录失败（但请求是成功的 200 OK），应用翻译
         const backendError = responseData.error;
         const displayError = errorMessages[backendError] || backendError || '登录失败，未知错误。';
         setError(displayError);
