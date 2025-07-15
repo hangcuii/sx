@@ -63,7 +63,7 @@ const UserDeletionPage = () => {
 
       <form onSubmit={handleSubmit}>
         <p style={{ textAlign: 'left' }}>
-          为确认此操作，请输入您的用户名/ID： <strong>{user.userId}</strong>
+          为确认此操作，请输入您的ID： <strong>{user.userId}</strong>
         </p>
         <div className={styles.inputGroup}>
           <i className={`fas fa-exclamation-triangle ${styles.inputIcon}`}></i>
