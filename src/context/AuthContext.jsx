@@ -1,3 +1,5 @@
+// src/context/AuthContext.jsx
+
 /* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useState, useContext, useEffect, useCallback } from 'react';
 
@@ -24,16 +26,13 @@ export const AuthProvider = ({ children }) => {
     }
   }, [user]);
 
-  // login 函数现在接收后端返回的原始数据对象
   const login = (backendUserData) => {
     // 从后端数据构建内部的 user 对象，并确保所有 ID 都是整数
 
     const newUserId = parseInt(backendUserData.userId || backendUserData.userid, 10);
 
-    // 增加一个健壮性检查，以防后端返回无效的 userId
     if (isNaN(newUserId)) {
       console.error("Login Error: Invalid userId received from backend.", backendUserData);
-      // 在这种情况下，我们不应该设置用户，以避免应用出错
       return;
     }
 

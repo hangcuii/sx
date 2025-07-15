@@ -29,10 +29,9 @@ const LoginPage = () => {
       const response = await loginApi({ name, pwd });
       const responseData = response.data;
 
-      // 假设后端成功时返回: { success: 1, userId: ..., studentId: ..., teacherId: ... }
+      // 后端成功时返回: { success: 1, userId: ..., studentId: ..., teacherId: ... }
       if (responseData.success === 1 && responseData.userId) {
 
-        // --- 简化后的逻辑 ---
         // 直接将后端返回的整个数据对象传递给 login 函数
         auth.login(responseData);
 

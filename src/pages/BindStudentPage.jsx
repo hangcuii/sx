@@ -13,9 +13,7 @@ const BindStudentPage = () => {
   const [isRebinding, setIsRebinding] = useState(false);
 
   const { user, updateUserStudentId, clearUserStudentId } = useAuth();
-  //const navigate = useNavigate();
 
-  // 处理绑定和更换绑定的提交逻辑
   const handleSubmit = async (e) => {
     e.preventDefault();
     const trimmedId = studentIdInput.value.trim();
@@ -52,7 +50,6 @@ const BindStudentPage = () => {
     setIsLoading(true);
     setError('');
     try {
-      // 调用同一个API，但studentId的值为null
       await bindStudentApi({ userId: user.userId, studentId: null });
       clearUserStudentId();
       alert('解除绑定成功！');
@@ -65,7 +62,6 @@ const BindStudentPage = () => {
     }
   };
 
-  // 渲染绑定表单的函数，用于“初次绑定”和“更换绑定”
   const renderBindingForm = () => (
     <div className={styles.formContainer}>
       <h2>{isRebinding ? '更换绑定学生信息' : '绑定学生信息'}</h2>

@@ -23,14 +23,14 @@ const TeacherCenterPage = () => {
             {/* 卡片网格 */}
             <div className={styles.dashboardGrid}>
 
-                {/* 卡片1: 教师画像 */}
+                {/* 教师画像 */}
                 <Link to="/teacher-portrait" className={styles.card}>
                     <i className="fas fa-person-chalkboard"></i>
                     <h3>教师画像</h3>
                     <p>查看您的个人教学画像。</p>
                 </Link>
 
-                {/* 您可以在此按相同格式添加更多教师中心的功能卡片 */}
+
 
             </div>
         </div>

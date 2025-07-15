@@ -11,7 +11,7 @@ const UserDeletionPage = () => {
   const [error, setError] = useState('');
   const [confirmationInput, setConfirmationInput] = useState('');
   const navigate = useNavigate();
-  const { user, logout } = useAuth(); // 假设 useAuth 返回 { user, logout, ... }
+  const { user, logout } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();

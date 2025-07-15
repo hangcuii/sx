@@ -13,9 +13,7 @@ const BindTeacherPage = () => {
   const [isRebinding, setIsRebinding] = useState(false);
 
   const { user, updateUserTeacherId, clearUserTeacherId } = useAuth(); // 使用 teacher 相关函数
-  //const navigate = useNavigate();
 
-  // 处理绑定和更换绑定的提交逻辑
   const handleSubmit = async (e) => {
     e.preventDefault();
     const trimmedId = teacherIdInput.value.trim();

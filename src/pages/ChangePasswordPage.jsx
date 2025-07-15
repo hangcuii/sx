@@ -67,11 +67,10 @@ const ChangePasswordPage = () => {
   };
 
   return (
-    // 使用统一的 formContainer 样式
+
     <div className={styles.formContainer}>
       <h2>修改密码</h2>
       <form onSubmit={handleSubmit}>
-        {/* 旧密码输入框 */}
         <div className={styles.inputGroup}>
           <i className={`fas fa-key ${styles.inputIcon}`}></i>
           <input
@@ -85,7 +84,6 @@ const ChangePasswordPage = () => {
           />
         </div>
 
-        {/* 新密码输入框 */}
         <div className={styles.inputGroup}>
           <i className={`fas fa-lock ${styles.inputIcon}`}></i>
           <input
@@ -99,7 +97,6 @@ const ChangePasswordPage = () => {
           />
         </div>
 
-        {/* 确认新密码输入框 */}
         <div className={styles.inputGroup}>
           <i className={`fas fa-check-circle ${styles.inputIcon}`}></i>
           <input
@@ -113,7 +110,6 @@ const ChangePasswordPage = () => {
           />
         </div>
 
-        {/* 错误和成功消息提示 */}
         {error && <p className={styles.errorMessage}>{error}</p>}
         {success && <p style={{ color: 'green', minHeight: '1.2rem', marginBottom: '1rem', fontSize: '0.9rem' }}>{success}</p>}
         {/* 如果没有错误或成功消息，则显示一个占位的空p标签，防止布局跳动 */}

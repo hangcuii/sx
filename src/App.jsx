@@ -20,6 +20,7 @@ import LearningCenterPage from './pages/LearningCenterPage';
 import StudentAnalysisReportPage from './pages/StudentAnalysisReportPage';
 import StudentCenterPage from "./pages/StudentCenterPage.jsx";
 import StudentBehaviorAnalysisPage from "./pages/StudentBehaviorAnalysisPage.jsx";
+import CourseReportPage from './pages/CourseReportPage.jsx';
 import StudentPortraitPage from "./pages/StudentPortraitPage.jsx";
 import TeacherCenterPage from "./pages/TeacherCenterPage.jsx";
 import TeacherPortraitPage from "./pages/TeacherPortraitPage.jsx";
@@ -46,7 +47,7 @@ function App() {
                     onClick={() => navigate('/student-center')}
                     className={`${styles.btn} ${styles.btnSecondary}`}
                 >
-                    <i className="fas fa-graduation-cap" style={{marginRight: '8px'}}></i>
+                    <i className="fas fa-user-graduate" style={{marginRight: '8px'}}></i>
                     学生中心
                 </button>
 
@@ -54,7 +55,7 @@ function App() {
                     onClick={() => navigate('/teacher-center')}
                     className={`${styles.btn} ${styles.btnSecondary}`}
                 >
-                    <i className="fas fa-graduation-cap" style={{marginRight: '8px'}}></i>
+                    <i className="fas fa-person-chalkboard" style={{marginRight: '8px'}}></i>
                     教师中心
                 </button>
 
@@ -63,7 +64,7 @@ function App() {
                     onClick={() => navigate('/learning-center')}
                     className={`${styles.btn} ${styles.btnSecondary}`}
                 >
-                    <i className="fas fa-graduation-cap" style={{marginRight: '8px'}}></i>
+                    <i className="fas fa-book-open-reader" style={{marginRight: '8px'}}></i>
                     学习中心
                 </button>
 
@@ -105,6 +106,7 @@ function App() {
                         <Route path="/student-analysis-report" element={<StudentAnalysisReportPage />} />
                         <Route path="/student-center" element={<StudentCenterPage />} />
                         <Route path="/student-behavior-report" element={<StudentBehaviorAnalysisPage />} />
+                         <Route path="/course-report-detail" element={<CourseReportPage />} />
                         <Route path="/student-portrait" element={<StudentPortraitPage />} />
                         <Route path="/teacher-center" element={<TeacherCenterPage />} />
                         <Route path="/teacher-portrait" element={<TeacherPortraitPage />} />
