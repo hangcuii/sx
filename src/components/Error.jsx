@@ -1,14 +1,24 @@
+// src/components/Error.jsx
+
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from '../App.module.css';
 
-function Error({ message, onRetry }) {
+
+function Error({ message, returnPath = '/dashboard' }) {
+  const navigate = useNavigate();
+
+  const handleReturn = () => {
+    navigate(returnPath); // 跳转到指定路径
+  };
+
   return (
-    <div style={{ textAlign: 'center', color: 'red', padding: '50px 0' }}>
-      <h2>加载失败</h2>
-      <p>{message}</p>
-      {/* 传递一个onRetry函数，让用户可以重试 */}
-      <button className={styles['back-to-portal-btn']} onClick={onRetry}>
-        返回重试
+    <div style={{ textAlign: 'center', color: '#dc3545', padding: '50px 20px' }}>
+      <h2 style={{ marginBottom: '0.5rem' }}>加载失败</h2>
+      <p style={{ marginBottom: '1.5rem', color: '#6c757d' }}>{message}</p>
+
+      <button className={styles['back-to-portal-btn']} onClick={handleReturn}>
+        返回仪表盘
       </button>
     </div>
   );

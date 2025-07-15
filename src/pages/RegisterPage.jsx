@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom'; // 使用 Link 组件
 import { register as registerApi } from '../services/api';
 
-// 导入 CSS Modules
 import styles from '../App.module.css';
 
 const RegisterPage = () => {
@@ -57,7 +56,7 @@ const RegisterPage = () => {
               navigate('/login');
             }, 2000);
           } else {
-            // 业务逻辑失败 (例如，用户名重复)
+            // 业务逻辑失败 (用户名重复)
             // axios 认为是成功 (200 OK)，在这里处理错误
             const backendError = response.data.error;
             const displayError = errorMessages[backendError] || backendError || '操作失败，未知错误。';

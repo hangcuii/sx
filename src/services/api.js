@@ -34,18 +34,15 @@ export const changeUsername = (update4name) => apiClient.post('/api/user/update_
 export const bindStudent = (studentData) => apiClient.post('/api/user/update_studentId', studentData);
 export const bindTeacher = (teacherData) => apiClient.post('/api/user/update_teacherId', teacherData);
 export const deleteUser = (userData) => apiClient.post('/api/user/userDeletion', userData);
+export const studentBehaviorAnalysis = (studentdata) => apiClient.post('/api/student/learningBehavior',studentdata);
+export const getCourseReport = (reportData) => apiClient.post('/api/course/analysis', reportData);//学情分析第二步
+export const getStudentPortraitData = (userData) => apiClient.post('/api/student/portrait', userData);
+export const getTeacherPortraitData = (userData) => apiClient.post('/api/teacher/portrait', userData);
+export const getTeachingResourceData = () => apiClient.get('/api/platform/analysis');//教学资源分析
+export const getStudentAnalysisReport = (reportData) => apiClient.post('/api/course/search', reportData);//学情分析第一步
 
 
 
 
-
-export const getStudentLearningBehavior = (studentId) => {
-
-  return apiClient.get(`/api/student/${studentId}/learningBehavior`);
-};
-
-
-// 获取受保护的仪表盘数据（如果需要的话）
-export const getDashboardData = () => apiClient.get('/dashboard-data');
 
 export default apiClient;

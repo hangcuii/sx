@@ -282,7 +282,7 @@
   width: 100%; /* 让按钮组容器的宽度与其他元素（如提交按钮）保持一致 */
 }
 
-/* (可选) 为危险操作按钮添加红色样式 */
+/* 为危险操作按钮添加红色样式 */
 .btnDanger {
   background-color: #dc3545; /* 危险操作的红色背景 */
   border-color: #dc3545;
@@ -292,4 +292,13 @@
 .btnDanger:hover {
   background-color: #c82333; /* 鼠标悬停时颜色变深 */
   border-color: #bd2130;
+}
+
+.metricCardWrapper {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.metricCardWrapper:hover {
+  transform: translateY(-8px); /* 鼠标悬停时向上移动8px */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12); /* 阴影变得更深更广 */
 }

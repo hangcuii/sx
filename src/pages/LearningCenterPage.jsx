@@ -23,7 +23,7 @@ const LearningCenterPage = () => {
               <Link to="/student-analysis-report" className={styles.card}>
                   <i className="fas fa-chart-line"></i>
                   <h3>学情分析报告</h3>
-                  <p>查看您的个人学习行为与表现。</p>
+                  <p>查看课程分析。</p>
               </Link>
 
 
