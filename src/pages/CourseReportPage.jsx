@@ -95,7 +95,7 @@ const CourseReportPage = () => {
         返回课程列表
       </button>
 
-      <h1>{course ? `${course.name} - 学习行为报告` : '学习行为报告'}</h1>
+      <h1>{course ? `${course.name} - 学情分析报告` : '学情分析报告'}</h1>
 
       {isLoading && <Loading />}
       {error && <Error message={error} onRetry={handleRetry} />}

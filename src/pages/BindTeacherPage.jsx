@@ -22,7 +22,7 @@ const BindTeacherPage = () => {
       return;
     }
     const teacherIdAsNumber = parseInt(trimmedId, 10);
-    if (isNaN(teacherIdAsNumber)) {
+    if (isNaN(teacherIdAsNumber)||teacherIdAsNumber<1||teacherIdAsNumber>1000) {
       setError('请输入有效的教师ID（仅包含数字）。');
       return;
     }

@@ -8,7 +8,7 @@ import { useAuth } from '../context/AuthContext';
 const DashboardPage = () => {
   const { user } = useAuth();
 
-  // 辅助函数，渲染引导部分 (这部分无需修改)
+  // 辅助函数，渲染引导部分
   const renderGuidanceSection = () => {
     if (!user) return null;
     const hasStudentId = !!user.studentId;
@@ -57,7 +57,7 @@ const DashboardPage = () => {
     return null;
   };
 
-  // 竖排卡片容器的样式 (无需修改)
+  // 竖排卡片容器的样式
   const cardContainerStyle = {
     display: 'flex',
     flexDirection: 'column',
@@ -65,16 +65,16 @@ const DashboardPage = () => {
     gap: '2rem',
   };
 
-  // *** 修改点 1: 为单个卡片定义新的居中样式 ***
+  // *** 为单个卡片定义样式 ***
   const singleCardStyle = {
     width: '100%',
     maxWidth: '800px',
     // 继承 .card 的基础样式，但覆盖以下属性
     display: 'flex',
-    flexDirection: 'column', // 改为纵向排列
+    flexDirection: 'column', // 纵向排列
     alignItems: 'center',    // 水平居中
     justifyContent: 'center',// 垂直居中
-    textAlign: 'center',     // <<-- 让所有内部文本居中
+    textAlign: 'center',     // 让所有内部文本居中
     gap: '1rem',             // 元素之间的垂直间距
   };
 
@@ -96,7 +96,6 @@ const DashboardPage = () => {
       {/* 竖排功能中心卡片布局 */}
       <div style={cardContainerStyle}>
 
-        {/* *** 修改点 2: 简化每个卡片的JSX结构并应用新样式 *** */}
 
         {/* ==================== 学生中心 ==================== */}
         <Link to="/student-center" className={styles.card} style={singleCardStyle}>

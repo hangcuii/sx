@@ -22,7 +22,7 @@ const BindStudentPage = () => {
       return;
     }
     const studentIdAsNumber = parseInt(trimmedId, 10);
-    if (isNaN(studentIdAsNumber)) {
+    if (isNaN(studentIdAsNumber)||studentIdAsNumber<1||studentIdAsNumber>1000) {
       setError('请输入有效的学生ID（仅包含数字）。');
       return;
     }
